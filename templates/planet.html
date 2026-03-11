@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>{{name}}</title>
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<h1>{{name}}</h1>
+
+<p>{{data.description}}</p>
+
+<p>Gravity: {{data.gravity}} m/s²</p>
+<p>Temperature range: {{data.temp}}</p>
+
+<h2>Temperature Graph</h2>
+
+<canvas id="chart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+// отримуємо температури з Python
+let temps = {{data.temp}}
+
+// створюємо графік
+new Chart(
+document.getElementById("chart"),
+{
+type: "line",
+data: {
+labels: ["Min", "Max"],
+datasets: [{
+label: "Temperature °C",
+data: temps
+}]
+}
+}
+)
+
+</script>
+
+
+<h2>Weight Calculator</h2>
+
+<input id="mass" placeholder="Your mass kg">
+
+<button onclick="calc()">Calculate</button>
+
+<p id="result"></p>
+
+<script>
+
+function calc(){
+
+let mass = document.getElementById("mass").value
+
+let gravity = {{data.gravity}}
+
+let weight = mass * gravity
+
+document.getElementById("result").innerHTML =
+"Your weight on {{name}}: " + weight + " N"
+
+}
+
+</script>
+
+</body>
+</html>

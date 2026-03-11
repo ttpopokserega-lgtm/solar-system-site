@@ -1,0 +1,13 @@
+# Коментар
+print ("Gaga", 'Next', 22, 22.34, sep="; ", end= ".")
+print ("\t", input("\nEditor is say\n\t"))
+print ("\n", input(2*34))
+print ("\t", 22 % 11)
+print ("\t", 22/11)
+print ("\t", 22-34)
+print ("\t", 19+ 22.11)
+print ('\t', 22**11)
+print ("\t", min (22, 11, 22*11, 33))
+print("\t", max (22+11, 99, 11*11, 4**6.3))
+print ("\t", pow(11, 22))
+print ("\t ", round(222/11,34))

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Solar System</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<h1>Solar System Explorer</h1>
+
+<a href="/solar3d">
+<button class="planet-btn solar-btn">
+3D Solar System
+</button>
+</a>
+
+<div class="container">
+
+{% for planet in planets %}
+
+<a href="/planet/{{planet}}">
+<button class="planet-btn">
+{{planet}}
+</button>
+</a>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
