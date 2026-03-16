@@ -1,33 +1,60 @@
-from flask import Flask, render_template
-from planets import planets
+from flask import Flask, render_template, request, redirect, session
+from datetime import datetime
 
-# створення Flask додатку
 app = Flask(__name__)
 
-# головна сторінка
-@app.route("/")
-def index():
-    # передаємо список планет у HTML
-    return render_template("index.html", planets=planets)
+# секретний ключ для session
+app.secret_key = "solar_system_secret"
 
-# сторінка окремої планети
-@app.route("/planet/<name>")
-def planet(name):
 
-    # отримуємо дані про планету
-    data = planets.get(name)
+# сторінка входу
+@app.route("/", methods=["GET","POST"])
+def login():
 
-    return render_template(
-        "planet.html",
-        name=name,
-        data=data
-    )
+    if request.method == "POST":
 
-# сторінка 3D моделі
+        nickname = request.form.get("nickname")
+
+        # зберігаємо нік у сесії
+        session["user"] = nickname
+
+        # записуємо у файл
+        with open("visitors.txt","a",encoding="utf-8") as f:
+            f.write(f"{nickname} | {datetime.now()}\n")
+
+        return redirect("/menu")
+
+    return render_template("login.html")
+
+
+# головне меню
+@app.route("/menu")
+def menu():
+
+    if "user" not in session:
+        return redirect("/")
+
+    return render_template("index.html", user=session["user"])
+
+
+# сторінка 3D системи
 @app.route("/solar3d")
-def solar3d():
+def solar():
+
+    if "user" not in session:
+        return redirect("/")
+
     return render_template("solar3d.html")
 
-# запуск сервера
+
+# вихід
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
